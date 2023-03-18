@@ -11,6 +11,8 @@ probs = [1/14, 1/14, 1/14, 1/14, 1/14, 1/14, 1/14, 1/14, 1/14, 1/14, 1/14, 1/14,
 
 # assert math.isclose(sum(probs), 1.0) == True
 
+NUM_TOKENS = 884647     # Total number of tokens in Shakespeare's plays - Don't run it now - use the dataset instead.
+
 
 def spit_garbage(len_expr = 10):
   """ Source : https://math.wvu.edu/~hdiamond/Math222F17/Sigurd_et_al-2004-Studia_Linguistica.pdf """
@@ -23,11 +25,9 @@ def spit_garbage(len_expr = 10):
   word_lens = [i+1 for i in range(len(word_len_probs))]  
   wl = np.random.choice(word_lens, p=word_len_probs)
   result = "".join([np.random.choice(list_chars, p=probs) for i in range(wl)])
-  print(result)
+  with open('math.txt', 'a') as fp:
+    print(result, end=' ', file=fp)
 
 
-def write_to_file(path = './'):
-  pass
-
-for i in range(15):
+for i in  tqdm(range(NUM_TOKENS)):
   spit_garbage()
