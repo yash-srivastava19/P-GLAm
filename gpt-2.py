@@ -29,9 +29,9 @@ valData = data[:N]
 @dataclass
 class TuningParameters:
   context_length = 10  
-  batch_size = 8
+  batch_size = 16
   eval_interval = 100
-  n_embd = 64
+  n_embd = 128
   dropout = 0.2
   n_layer = 15
   n_head = 15
@@ -240,7 +240,7 @@ class PGLAm(nn.Module):
     
 model = PGLAm()
 m = model.to(device)
-print(f'{sum(p.numel() for p in m.parameters())/1e6:.2f} M parameters')
+print(f'{sum(p.numel() for p in m.parameters())/1e6:.2f} M parameters')   # currently, a 3.87M Parameter model.
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=params.learning_rate)
 
