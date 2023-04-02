@@ -34,8 +34,8 @@ class TuningParameters:
   eval_interval = 100
   n_embd = 128
   dropout = 0.2
-  n_layer = 15
-  n_head = 15
+  n_layer = 20
+  n_head = 20
   max_iters = 500
   eval_iters = 50
   learning_rate = 3e-4
@@ -250,7 +250,7 @@ for iter in range(params.max_iters):
     # every once in a while evaluate the loss on train and val sets
     if iter % params.eval_interval == 0 or iter == params.max_iters - 1:
         losses = estimate_loss()
-        perplexity = torch.exp(loss)
+        perplexity = torch.exp(losses)
         print(f"Step: {iter}, Train Loss: {losses['train']:.4f}, Val Loss: {losses['val']:.4f}, Perplexity: {perplexity.item()}")
 
     # sample a batch of data
