@@ -21,8 +21,8 @@ def eval_expr(file_path:str):
 
 print('Random Distribution Statistics')
 corr, incorr = eval_expr('math.txt')
-print(f'Correct Probability : {} Incorrect Probability : {}')
+print(f'Correct Probability : {corr} Incorrect Probability : {incorr}')
 
 print('P-GLAm Distribution Statistics')
 corr, incorr = eval_expr('gen_text.txt')
-print(f'Correct Probability : {} Incorrect Probability : {}')
+print(f'Correct Probability : {corr} Incorrect Probability : {incorr}')
