@@ -264,4 +264,8 @@ for iter in range(params.max_iters):
 # generate from the model
 context = torch.zeros((1, 1), dtype=torch.long, device=params.device)
 print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
-#open('gen_text.txt', 'w').write(decode(m.generate(context, max_new_tokens=10000)[0].tolist()))    
+
+# Uncomment the below line to generate the tokens and write them to the file 'gen_text.txt' as that of 'math.txt' - now 884647, but 69420 also works. 
+# Ensure that both the texts are of same token length for easier reproducibility of results.
+
+#open('gen_text.txt', 'w').write(decode(m.generate(context, max_new_tokens=884647)[0].tolist())) 
