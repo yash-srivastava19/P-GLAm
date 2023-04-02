@@ -1,6 +1,7 @@
 # First load the dataset
 import torch
 import torch.nn as nn
+from dataclasses import dataclass
 from torch.nn import functional as F
 
 with open('math.txt', 'r', encoding='utf-8') as f:   ## add path to the dataset here.
@@ -144,9 +145,9 @@ class BigramLanguageModel(nn.module):
     def __init__(self, vocab_size):
         super().__init__()
         self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
-        self.position_embedding_table = nn.Embedding(context_length, n_embd)
-        self.sa_heads = MultiHeadAttention(4, n_embd//4)   # 4 heads of 8 dimensional self attention
-        self.lm_head = nn.Linear(n_embd, vocab_size)
+        self.position_embedding_table = nn.Embedding(params.context_length, params.n_embd)
+        self.sa_heads = MultiHeadAttention(4, params.n_embd//4)   # 4 heads of 8 dimensional self attention
+        self.lm_head = nn.Linear(params.n_embd, vocab_size)
 
     def forward(self, idx, targets=None):
         """[Index and targets are both batch and time(context) tensor of integers. ]"""
@@ -170,7 +171,7 @@ class BigramLanguageModel(nn.module):
 
     def generate(self, idx, max_new_tokens):
         for _ in range(max_new_tokens):
-            idx_cond = idx[:, -context_length]
+            idx_cond = idx[:, -params.context_length]
             logits, loss = self(idx_cond)
             logits = logits[:, -1, :]   # (B,C)
             probs = F.softmax(logits, dims=-1)
@@ -239,7 +240,7 @@ class PGLAm(nn.Module):
     
     
 model = PGLAm()
-m = model.to(device)
+m = model.to(params.device)
 print(f'{sum(p.numel() for p in m.parameters())/1e6:.2f} M parameters')   # currently, a 3.87M Parameter model.
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=params.learning_rate)
